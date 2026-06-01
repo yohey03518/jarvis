@@ -3,8 +3,8 @@ name: Build and Push Docker Image
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - 'Dockerfile'
+    #paths:
+    #  - 'Dockerfile'
   pull_request:
     branches: [ "main" ]
     paths:
