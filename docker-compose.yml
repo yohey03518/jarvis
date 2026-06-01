@@ -1,9 +1,6 @@
 services:
   agent:
-    build:
-      context: .
-      args:
-        CC_CONNECT_VERSION: ${CC_CONNECT_VERSION:-d66540236f0041823c970f08448ca93cfacf95e0}
+    build: .
     volumes:
       - ./config:/root/.cc-connect
       - .:/root/agent
