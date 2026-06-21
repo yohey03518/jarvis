@@ -23,18 +23,13 @@ This repository contains the configuration and scripts to set up a personal AI a
    cp .env.example .env
    # Edit .env with your API keys
    ```
-4. **Configuration**:
-   ```bash
-   cp config/config.example.toml config/config.toml
-   # Edit config/config.toml, noting that callback_path is set to "/message"
-   ```
-5. **Start Agent**:
+4. **Start Agent**:
    ```bash
    docker compose up -d --build
    ```
    *Note: Nginx exposes port `80` to the host, while the internal agent service running on port `8080` is kept isolated inside the container network.*
 
-6. **Authenticate Antigravity CLI (agy)**:
+5. **Authenticate Antigravity CLI (agy)**:
    On your first setup, you must authenticate the `agy` CLI inside the container. Run:
    ```bash
    docker compose exec -it agent agy
@@ -48,6 +43,25 @@ Whenever you update the repository or change the configuration:
 3. `docker compose up -d --build`
 
 ## Secrets Management
-- `.env`: Stores sensitive API keys (never commit this).
-- `config/config.toml`: Stores `cc-connect` configuration (never commit this).
+- `.env`: Stores sensitive API keys and LINE tokens (never commit this).
+- `config/config.toml`: Stores `cc-connect` project/agent/platform structure and links credentials to `.env` variables (this is safe to commit).
+
+## Customizing the Callback Path
+If you want to customize the callback path (default is `/message`) for your instant messenger (e.g., LINE webhook):
+1. **Config TOML**: Update `callback_path` under `[projects.platforms.options]` in `config/config.toml`:
+   ```toml
+   callback_path = "/new-path"
+   ```
+2. **Nginx Configuration**: Update the location block and proxy path in `nginx/default.conf` to match:
+   ```nginx
+   location = /new-path {
+       ...
+       proxy_pass http://agent:8080/new-path;
+   }
+   ```
+3. **Restart the services** to apply changes:
+   ```bash
+   docker compose up -d --build
+   ```
+
 
