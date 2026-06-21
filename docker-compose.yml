@@ -7,6 +7,14 @@ services:
       - ./.gemini:/root/.gemini
     env_file:
       - .env
+    expose:
+      - "8080"
+    restart: unless-stopped
+
+  nginx:
+    build: ./nginx
     ports:
-      - "8080:8080"
+      - "80:80"
+    depends_on:
+      - agent
     restart: unless-stopped

@@ -4,6 +4,7 @@ This repository contains the configuration and scripts to set up a personal AI a
 
 ## Features
 - **cc-connect**: A bridge for local AI agents.
+- **Nginx Reverse Proxy**: A secure frontend reverse proxy handling rate-limiting (5 requests/sec per IP), blocking scanner bots, and dropping raw IP scanning attempts.
 - **AI CLIs**: Pre-installed Claude Code, Antigravity CLI, and Codex.
 - **Portability**: Managed via Docker and a host bootstrap script.
 
@@ -25,12 +26,14 @@ This repository contains the configuration and scripts to set up a personal AI a
 4. **Configuration**:
    ```bash
    cp config/config.example.toml config/config.toml
-   # Edit config/config.toml if needed
+   # Edit config/config.toml, noting that callback_path is set to "/message"
    ```
 5. **Start Agent**:
    ```bash
    docker compose up -d --build
    ```
+   *Note: Nginx exposes port `80` to the host, while the internal agent service running on port `8080` is kept isolated inside the container network.*
+
 6. **Authenticate Antigravity CLI (agy)**:
    On your first setup, you must authenticate the `agy` CLI inside the container. Run:
    ```bash
@@ -47,3 +50,4 @@ Whenever you update the repository or change the configuration:
 ## Secrets Management
 - `.env`: Stores sensitive API keys (never commit this).
 - `config/config.toml`: Stores `cc-connect` configuration (never commit this).
+
