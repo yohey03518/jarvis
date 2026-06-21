@@ -33,4 +33,4 @@ channel_secret = "${LINE_CHANNEL_SECRET}"
 channel_token = "${LINE_CHANNEL_ACCESS_TOKEN}"
 port = "8080"
 callback_path = "/callback"
-allow_from = "*
+allow_from = "*"

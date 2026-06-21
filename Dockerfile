@@ -29,4 +29,5 @@ ENV PATH="/root/.local/bin:${PATH}"
 RUN npm install -g cc-connect
 
 WORKDIR /root/agent
+EXPOSE 8080
 ENTRYPOINT ["cc-connect"]
