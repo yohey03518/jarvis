@@ -16,8 +16,8 @@ RUN apt-get update && apt-get install -y \
 # 1. Claude Code
 #RUN curl -fsSL https://claude.ai/install.sh | bash
 
-# 2. Gemini CLI
-RUN npm install -g @google/gemini-cli
+# 2. Antigravity CLI
+RUN curl -fsSL https://antigravity.google/cli/install.sh | bash
 
 # 3. Codex CLI
 #RUN npm install -g @openai/codex

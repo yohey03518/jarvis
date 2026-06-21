@@ -10,19 +10,15 @@ name = "gemini"
 name = "jarvis"
 
 [projects.agent]
-type = "gemini"
-provider_refs = ["gemini"]
+type = "antigravity"
+provider_refs = ["antigravity"]
 
 [projects.agent.options]
 work_dir = "/root/agent"
 mode = "yolo"
 # model = "gemini-2.5-flash"
-# cmd = "gemini" # CLI binary name (default: "gemini") 
+cmd = "agy" 
 # timeout_mins = 30
-
-[[projects.agent.providers]]
-name = "google"
-# api_key = "your-gemini-api-key"    # GEMINI_API_KEY
 
 # Platforms bound to the project
 [[projects.platforms]]
