@@ -4,6 +4,7 @@ services:
     volumes:
       - ./config:/root/.cc-connect
       - .:/root/agent
+      - ./.gemini:/root/.gemini
     env_file:
       - .env
     ports:

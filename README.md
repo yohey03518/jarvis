@@ -31,6 +31,12 @@ This repository contains the configuration and scripts to set up a personal AI a
    ```bash
    docker compose up -d --build
    ```
+6. **Authenticate Antigravity CLI (agy)**:
+   On your first setup, you must authenticate the `agy` CLI inside the container. Run:
+   ```bash
+   docker compose exec -it agent agy
+   ```
+   Follow the prompts to complete the Google authentication. Since the host's `./.gemini` path is mounted to `/root/.gemini` inside the container, your credentials will be preserved across container restarts or rebuilds.
 
 ## Maintenance
 Whenever you update the repository or change the configuration:
