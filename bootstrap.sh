@@ -32,7 +32,4 @@ fi
 # Create config directory if not exists
 mkdir -p config
 
-# Export environment variables from .env
-export $(grep -v '^#' .env | xargs)
-
 echo "Host initialization complete."
