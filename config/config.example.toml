@@ -1,18 +1,36 @@
-[general]
-mode = "yolo"
+[log]
+level = "info" # debug, info, warn, error
 
-[[platforms]]
-name = "line"
-type = "line"
-channel_secret = "${LINE_CHANNEL_SECRET}"
-channel_access_token = "${LINE_CHANNEL_ACCESS_TOKEN}"
-
+# Global Providers
 [[providers]]
-name = "antigravity"
-type = "antigravity"
-api_key = "${GOOGLE_API_KEY}"
+name = "gemini"
 
+# Projects Configuration
 [[projects]]
-name = "default"
+name = "jarvis"
+
+[projects.agent]
+type = "gemini"
+provider_refs = ["gemini"]
+
+[projects.agent.options]
 work_dir = "/root/agent"
-agent = "antigravity"
+mode = "yolo"
+# model = "gemini-2.5-flash"
+# cmd = "gemini" # CLI binary name (default: "gemini") 
+# timeout_mins = 30
+
+[[projects.agent.providers]]
+name = "google"
+# api_key = "your-gemini-api-key"    # GEMINI_API_KEY
+
+# Platforms bound to the project
+[[projects.platforms]]
+type = "line"
+
+[projects.platforms.options]
+channel_secret = "${LINE_CHANNEL_SECRET}"
+channel_token = "${LINE_CHANNEL_ACCESS_TOKEN}"
+port = "8080"
+callback_path = "/callback"
+allow_from = "*

@@ -14,16 +14,16 @@ RUN apt-get update && apt-get install -y \
 
 # Install AI CLIs
 # 1. Claude Code
-RUN curl -fsSL https://claude.ai/install.sh | bash
+#RUN curl -fsSL https://claude.ai/install.sh | bash
 
-# 2. Antigravity CLI
-RUN curl -fsSL https://antigravity.google/cli/install.sh | bash
+# 2. Gemini CLI
+RUN npm install -g @google/gemini-cli
+
+# 3. Codex CLI
+#RUN npm install -g @openai/codex
 
 # Ensure binaries are in PATH
 ENV PATH="/root/.local/bin:${PATH}"
-
-# 3. Codex CLI
-RUN npm install -g @openai/codex
 
 # 4. CC Connect
 RUN npm install -g cc-connect
