@@ -32,4 +32,6 @@ fi
 # Create config directory if not exists
 mkdir -p config
 
+source .bashrc
+
 echo "Host initialization complete."
