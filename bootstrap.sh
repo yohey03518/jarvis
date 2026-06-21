@@ -32,6 +32,26 @@ fi
 # Create config directory if not exists
 mkdir -p config
 
-source .bashrc
+# Check default .bashrc file and append sourcing of jarvis.bashrc if not present
+BASHRC_FILE="$HOME/.bashrc"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+JARVIS_BASHRC="$SCRIPT_DIR/jarvis.bashrc"
+
+echo "Checking if $JARVIS_BASHRC is sourced in $BASHRC_FILE..."
+if [ -f "$BASHRC_FILE" ]; then
+    if ! grep -qF "$JARVIS_BASHRC" "$BASHRC_FILE"; then
+        echo "Adding sourcing line to $BASHRC_FILE"
+        echo "" >> "$BASHRC_FILE"
+        echo "# Source Jarvis environment configuration" >> "$BASHRC_FILE"
+        echo "source \"$JARVIS_BASHRC\"" >> "$BASHRC_FILE"
+    fi
+else
+    echo "Creating $BASHRC_FILE and adding sourcing line"
+    echo "source \"$JARVIS_BASHRC\"" > "$BASHRC_FILE"
+fi
+
+if [ -f "$JARVIS_BASHRC" ]; then
+    source "$JARVIS_BASHRC"
+fi
 
 echo "Host initialization complete."
