@@ -15,6 +15,13 @@ services:
     build: ./nginx
     ports:
       - "80:80"
+      - "443:443"
+    env_file:
+      - .env
+    environment:
+      - NGINX_ENVSUBST_FILTER=^(DOMAIN_NAME|CERT_DOMAIN)$$
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - agent
     restart: unless-stopped

@@ -1,7 +1,21 @@
-# Main reverse proxy server block (default server to accept all hostnames/IPs)
+# HTTP server - redirect all traffic to HTTPS
 server {
-    listen 80 default_server;
-    server_name _;
+    listen 80;
+    server_name ${DOMAIN_NAME} www.${DOMAIN_NAME};
+
+    # Return 301 Redirect to HTTPS
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+# HTTPS server
+server {
+    listen 443 ssl default_server;
+    server_name ${DOMAIN_NAME} www.${DOMAIN_NAME};
+
+    ssl_certificate /etc/letsencrypt/live/${CERT_DOMAIN}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${CERT_DOMAIN}/privkey.pem;
 
     # Block known scanners/bots based on User-Agent
     if ($http_user_agent ~* (sqlmap|nmap|masscan|nikto|censys|libwww-perl|go-http-client|zgrab|acunetix|nessus)) {

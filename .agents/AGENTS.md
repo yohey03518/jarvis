@@ -5,4 +5,5 @@
 
 ## README Updates & Knowledge Persistence
 - Whenever modifying the project's configuration, ports, routes, services, setup flow, or introducing new key features, you MUST evaluate whether these changes impact the user/setup documentation. If so, update the project [README.md](file:///Users/erwin.chang/git/jarvis/README.md) to keep documentation in sync with codebase features.
-
+## Execution Constraints
+- Do not execute or run `bootstrap.sh` on the local machine/development environment. This script is only valid to run on the target remote server.

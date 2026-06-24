@@ -14,20 +14,21 @@ This repository contains the configuration and scripts to set up a personal AI a
    git clone <your-repo-url>
    cd jarvis
    ```
-2. **Host Initialization**:
+2. **Environment Setup**:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your API keys and domain details (DOMAIN_NAME, CERT_DOMAIN, LETSENCRYPT_EMAIL)
+   ```
+3. **Host Initialization & SSL Setup**:
    ```bash
    ./bootstrap.sh
    ```
-3. **Environment Setup**:
-   ```bash
-   cp .env.example .env
-   # Edit .env with your API keys
-   ```
+   *Note: This script installs system dependencies (including Docker and Certbot) and automatically checks/generates your Let's Encrypt SSL certificates using the domain details in your `.env`.*
 4. **Start Agent**:
    ```bash
    docker compose up -d --build
    ```
-   *Note: Nginx exposes port `80` to the host, while the internal agent service running on port `8080` is kept isolated inside the container network.*
+   *Note: Nginx exposes ports `80` and `443` to the host, while the internal agent service running on port `8080` is kept isolated inside the container network.*
 
 5. **Authenticate Antigravity CLI (agy)**:
    On your first setup, you must authenticate the `agy` CLI inside the container. Run:
