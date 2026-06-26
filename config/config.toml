@@ -21,12 +21,27 @@ cmd = "agy"
 # timeout_mins = 30
 
 # Platforms bound to the project
+# ==== Slack ====
 [[projects.platforms]]
-type = "line"
+type = "slack"
 
 [projects.platforms.options]
-channel_secret = "${LINE_CHANNEL_SECRET}"
-channel_token = "${LINE_CHANNEL_ACCESS_TOKEN}"
-port = "8080"
-callback_path = "/message"
-allow_from = "*"
+bot_token = "${SLACK_BOT_TOKEN}" # "xoxb-your-bot-token"
+app_token = "${SLACK_APP_TOKEN}" # "xapp-your-app-level-token"
+allow_from = "*"  # Allowed Slack user IDs / 允许的 Slack 用户 ID
+share_session_in_channel = false  # If true, all users in a channel share one agent session / 频道共享会话
+session_scope = "thread"  # Session granularity: "user" (default, per channel+user) |
+                        # "channel" (one session per channel, same as share_session_in_channel) |
+                        # "thread" (one session per Slack thread — a new top-level message starts
+                        #  a fresh session, replies in the same thread continue it).
+
+# ==== LINE ====
+# [[projects.platforms]]
+# type = "line"
+
+# [projects.platforms.options]
+# channel_secret = "${LINE_CHANNEL_SECRET}"
+# channel_token = "${LINE_CHANNEL_ACCESS_TOKEN}"
+# port = "8080"
+# callback_path = "/message"
+# allow_from = "*"
