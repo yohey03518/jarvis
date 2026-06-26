@@ -46,7 +46,15 @@ If you configure an external workspace git repository, you must set up an SSH ke
 2. **Add the public key to your Git provider**:
    * Copy the public key contents: `cat ~/.ssh/jarvis_deploy_key.pub`
    * Add it as a **Deploy Key** with **Write Access** enabled in your target repository's settings.
-3. **Configure the private key path** in `.env` under `WORKSPACE_SSH_KEY_PATH`.
+3. **Configure your SSH config file** (`~/.ssh/config`) on the host to map the new key to your Git host (e.g. `github.com`):
+   ```text
+   Host github.com
+       HostName github.com
+       User git
+       IdentityFile ~/.ssh/jarvis_deploy_key
+       IdentitiesOnly yes
+   ```
+4. **Configure the private key path** in `.env` under `WORKSPACE_SSH_KEY_PATH`.
 
 ## Maintenance
 Whenever you update the repository or change the configuration:
