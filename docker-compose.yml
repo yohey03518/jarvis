@@ -3,10 +3,14 @@ services:
     build: .
     volumes:
       - ./config:/root/.cc-connect
-      - .:/root/agent
+      - ${WORKSPACE_HOST_PATH}:/root/agent
       - ./.gemini:/root/.gemini
+      - ${WORKSPACE_SSH_KEY_PATH}:/tmp/ssh_key:ro
     env_file:
       - .env
+    environment:
+      - GIT_USER_NAME=${GIT_USER_NAME}
+      - GIT_USER_EMAIL=${GIT_USER_EMAIL}
     expose:
       - "8080"
     restart: unless-stopped

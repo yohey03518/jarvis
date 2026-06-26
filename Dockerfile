@@ -28,6 +28,11 @@ ENV PATH="/root/.local/bin:${PATH}"
 # 4. CC Connect
 RUN npm install -g cc-connect
 
+# Copy and set up the entrypoint script
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 WORKDIR /root/agent
 EXPOSE 8080
-ENTRYPOINT ["cc-connect"]
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

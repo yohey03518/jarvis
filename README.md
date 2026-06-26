@@ -17,13 +17,13 @@ This repository contains the configuration and scripts to set up a personal AI a
 2. **Environment Setup**:
    ```bash
    cp .env.example .env
-   # Edit .env with your API keys and domain details (DOMAIN_NAME, CERT_DOMAIN, LETSENCRYPT_EMAIL)
+   # Edit .env with your API keys, domain details, and agent workspace configuration.
    ```
 3. **Host Initialization & SSL Setup**:
    ```bash
    ./bootstrap.sh
    ```
-   *Note: This script installs system dependencies (including Docker and Certbot) and automatically checks/generates your Let's Encrypt SSL certificates using the domain details in your `.env`.*
+   *Note: This script installs system dependencies (including Docker and Certbot), clones the workspace repository to your host using the configured SSH key, and automatically checks/generates your Let's Encrypt SSL certificates using the domain details in your `.env`.*
 4. **Start Agent**:
    ```bash
    docker compose up -d --build
@@ -36,6 +36,17 @@ This repository contains the configuration and scripts to set up a personal AI a
    docker compose exec -it agent agy
    ```
    Follow the prompts to complete the Google authentication. Since the host's `./.gemini` path is mounted to `/root/.gemini` inside the container, your credentials will be preserved across container restarts or rebuilds.
+
+### Workspace Git SSH Setup
+If you configure an external workspace git repository, you must set up an SSH key to allow the agent container to push and pull changes:
+1. **Generate a passwordless SSH key pair** on the host machine:
+   ```bash
+   ssh-keygen -t ed25519 -C "jarvis-agent@local" -f ~/.ssh/jarvis_deploy_key
+   ```
+2. **Add the public key to your Git provider**:
+   * Copy the public key contents: `cat ~/.ssh/jarvis_deploy_key.pub`
+   * Add it as a **Deploy Key** with **Write Access** enabled in your target repository's settings.
+3. **Configure the private key path** in `.env` under `WORKSPACE_SSH_KEY_PATH`.
 
 ## Maintenance
 Whenever you update the repository or change the configuration:

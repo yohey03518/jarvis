@@ -54,13 +54,39 @@ if [ -f "$JARVIS_BASHRC" ]; then
     source "$JARVIS_BASHRC"
 fi
 
-# Let's Encrypt Certificate Check & Generation
+# Read configuration from .env
 ENV_FILE="$SCRIPT_DIR/.env"
 if [ -f "$ENV_FILE" ]; then
     DOMAIN_NAME=$(grep -v '^#' "$ENV_FILE" | grep "^DOMAIN_NAME=" | cut -d'=' -f2- | tr -d '"' | tr -d "'" | tr -d ' ')
     CERT_DOMAIN=$(grep -v '^#' "$ENV_FILE" | grep "^CERT_DOMAIN=" | cut -d'=' -f2- | tr -d '"' | tr -d "'" | tr -d ' ')
     EMAIL=$(grep -v '^#' "$ENV_FILE" | grep "^LETSENCRYPT_EMAIL=" | cut -d'=' -f2- | tr -d '"' | tr -d "'" | tr -d ' ')
 
+    # Workspace Git Repository Setup
+    WORKSPACE_REPO_URL=$(grep -v '^#' "$ENV_FILE" | grep "^WORKSPACE_REPO_URL=" | cut -d'=' -f2- | tr -d '"' | tr -d "'" | tr -d ' ')
+    WORKSPACE_HOST_PATH=$(grep -v '^#' "$ENV_FILE" | grep "^WORKSPACE_HOST_PATH=" | cut -d'=' -f2- | tr -d '"' | tr -d "'" | tr -d ' ')
+    WORKSPACE_SSH_KEY_PATH=$(grep -v '^#' "$ENV_FILE" | grep "^WORKSPACE_SSH_KEY_PATH=" | cut -d'=' -f2- | tr -d '"' | tr -d "'" | tr -d ' ')
+
+    # Clone Workspace Git Repository if configured
+    if [ -n "$WORKSPACE_REPO_URL" ] && [ -n "$WORKSPACE_HOST_PATH" ]; then
+        # Safely expand tilde (~) if present in paths
+        eval REAL_WORKSPACE_HOST_PATH="$WORKSPACE_HOST_PATH"
+        eval REAL_WORKSPACE_SSH_KEY_PATH="$WORKSPACE_SSH_KEY_PATH"
+
+        if [ ! -d "$REAL_WORKSPACE_HOST_PATH" ]; then
+            echo "Workspace directory not found. Cloning repository $WORKSPACE_REPO_URL into $REAL_WORKSPACE_HOST_PATH..."
+            if [ -f "$REAL_WORKSPACE_SSH_KEY_PATH" ]; then
+                # Use specified SSH key to clone
+                GIT_SSH_COMMAND="ssh -i $REAL_WORKSPACE_SSH_KEY_PATH -o StrictHostKeyChecking=no" git clone "$WORKSPACE_REPO_URL" "$REAL_WORKSPACE_HOST_PATH"
+            else
+                echo "Warning: WORKSPACE_SSH_KEY_PATH not found at $REAL_WORKSPACE_SSH_KEY_PATH. Attempting clone using default host keys..."
+                git clone "$WORKSPACE_REPO_URL" "$REAL_WORKSPACE_HOST_PATH"
+            fi
+        else
+            echo "Workspace directory already exists at $REAL_WORKSPACE_HOST_PATH."
+        fi
+    fi
+
+    # Let's Encrypt Certificate Check & Generation
     if [ -n "$DOMAIN_NAME" ]; then
         if [ -z "$CERT_DOMAIN" ]; then
             CERT_DOMAIN="$DOMAIN_NAME"
