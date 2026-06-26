@@ -1,3 +1,5 @@
+language = "" # (empty/not set): Auto-detect from user's first message 
+
 [log]
 level = "info" # debug, info, warn, error
 

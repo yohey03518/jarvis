@@ -1,6 +1,6 @@
 # Personal AI Agent Server
 
-This repository contains the configuration and scripts to set up a personal AI agent bridge between LINE and various AI CLIs (Claude Code, Antigravity CLI, and Codex).
+This repository contains the configuration and scripts to set up a personal AI agent bridge between LINE/Slack and various AI CLIs (Claude Code, Antigravity CLI, and Codex).
 
 ## Features
 - **cc-connect**: A bridge for local AI agents.
