@@ -20,6 +20,7 @@ provider_refs = ["antigravity"]
 [projects.agent.options]
 work_dir = "/root/agent"
 mode = "yolo"
+cron_file = "/root/agent/cron.json"
 # model = "gemini-2.5-flash"
 
 cmd = "agy"
