@@ -9,5 +9,5 @@ alias dlog="docker compose -f \"$HOME/jarvis/docker-compose.yml\" logs agent"
 alias cc=clear
 
 alias gpp="git pull"
-alias update="cd ~/jarvis && git pull && bash ./bootstrap.sh && dcub"
+alias update="cd ~/jarvis-workspace && git pull && cd ~/jarvis && git pull && bash ./bootstrap.sh && dcub"
 
