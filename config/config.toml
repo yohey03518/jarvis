@@ -1,13 +1,15 @@
-language = "" # (empty/not set): Auto-detect from user's first message 
+language = "en"
 
 [log]
 level = "info" # debug, info, warn, error
 
 # Global Providers
+
 [[providers]]
 name = "gemini"
 
 # Projects Configuration
+
 [[projects]]
 name = "jarvis"
 
@@ -19,11 +21,13 @@ provider_refs = ["antigravity"]
 work_dir = "/root/agent"
 mode = "yolo"
 # model = "gemini-2.5-flash"
-cmd = "agy" 
+
+cmd = "agy"
 # timeout_mins = 30
 
 # Platforms bound to the project
 # ==== Slack ====
+
 [[projects.platforms]]
 type = "slack"
 
