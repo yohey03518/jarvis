@@ -8,6 +8,7 @@ This repository contains the configuration and scripts to set up a personal AI a
 - **AI CLIs**: Pre-installed Claude Code, Antigravity CLI, and Codex.
 - **Portability**: Managed via Docker and a host bootstrap script.
 - **Timezone Synchronization**: Automatic synchronization of the host and container timezone settings via `TZ` in `.env`.
+- **Scheduler**: Built-in cron scheduler integration that persists configurations in the workspace and allows natural language scheduling.
 
 ## Setup
 1. **Initial Clone**:
@@ -56,6 +57,13 @@ If you configure an external workspace git repository, you must set up an SSH ke
        IdentitiesOnly yes
    ```
 4. **Configure the private key path** in `.env` under `WORKSPACE_SSH_KEY_PATH`.
+
+## Scheduler Feature
+Jarvis supports natural language task scheduling. The cron scheduler configuration is saved as `cron.json` within the workspace repository to persist schedules across container rebuilds and restarts.
+
+### Examples of User Prompts:
+- *"Help me check the website and make summary on every Monday 11 am"*
+- *"Run \`run.sh\` from the git repo jarvis every 12:45"*
 
 ## Maintenance
 Whenever you update the repository or change the configuration:
