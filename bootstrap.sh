@@ -65,6 +65,21 @@ if [ -f "$ENV_FILE" ]; then
     WORKSPACE_REPO_URL=$(grep -v '^#' "$ENV_FILE" | grep "^WORKSPACE_REPO_URL=" | cut -d'=' -f2- | tr -d '"' | tr -d "'" | tr -d ' ')
     WORKSPACE_HOST_PATH=$(grep -v '^#' "$ENV_FILE" | grep "^WORKSPACE_HOST_PATH=" | cut -d'=' -f2- | tr -d '"' | tr -d "'" | tr -d ' ')
     WORKSPACE_SSH_KEY_PATH=$(grep -v '^#' "$ENV_FILE" | grep "^WORKSPACE_SSH_KEY_PATH=" | cut -d'=' -f2- | tr -d '"' | tr -d "'" | tr -d ' ')
+    TZ=$(grep -v '^#' "$ENV_FILE" | grep "^TZ=" | cut -d'=' -f2- | tr -d '"' | tr -d "'" | tr -d ' ')
+
+    # Adjust host timezone if configured
+    if [ -n "$TZ" ]; then
+        echo "Setting host timezone to $TZ..."
+        if command -v timedatectl &> /dev/null; then
+            sudo timedatectl set-timezone "$TZ"
+        else
+            echo "timedatectl not found, attempting manual timezone link..."
+            sudo ln -sf "/usr/share/zoneinfo/$TZ" /etc/localtime
+            echo "$TZ" | sudo tee /etc/timezone > /dev/null
+        fi
+        echo "Host timezone set to: $(date)"
+    fi
+
 
     # Clone Workspace Git Repository if configured
     if [ -n "$WORKSPACE_REPO_URL" ] && [ -n "$WORKSPACE_HOST_PATH" ]; then

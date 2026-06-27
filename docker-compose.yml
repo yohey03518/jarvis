@@ -11,6 +11,7 @@ services:
     environment:
       - GIT_USER_NAME=${GIT_USER_NAME}
       - GIT_USER_EMAIL=${GIT_USER_EMAIL}
+      - TZ=${TZ}
     expose:
       - "8080"
     restart: unless-stopped
@@ -24,8 +25,10 @@ services:
       - .env
     environment:
       - NGINX_ENVSUBST_FILTER=^(DOMAIN_NAME|CERT_DOMAIN)$$
+      - TZ=${TZ}
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - agent
     restart: unless-stopped
+
