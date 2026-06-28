@@ -21,7 +21,7 @@ provider_refs = ["antigravity"]
 work_dir = "/root/agent"
 mode = "yolo"
 cron_file = "/root/agent/cron.json"
-# model = "gemini-2.5-flash"
+model = "Claude Sonnet 4.6 (Thinking)"
 
 cmd = "agy"
 # timeout_mins = 30
