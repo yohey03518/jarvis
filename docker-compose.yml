@@ -6,6 +6,7 @@ services:
       - ${WORKSPACE_HOST_PATH}:/root/agent
       - ./.gemini:/root/.gemini
       - ${WORKSPACE_SSH_KEY_PATH}:/tmp/ssh_key:ro
+      - /var/run/docker.sock:/var/run/docker.sock
     env_file:
       - .env
     environment:
