@@ -15,12 +15,12 @@ name = "jarvis"
 
 [projects.agent]
 type = "antigravity"
-provider_refs = ["antigravity"]
+provider_refs = ["gemini"]
 
 [projects.agent.options]
 work_dir = "/root/agent"
+data_dir = "/root/agent/data"
 mode = "yolo"
-cron_file = "/root/agent/cron.json"
 model = "Claude Sonnet 4.6 (Thinking)"
 
 cmd = "agy"
