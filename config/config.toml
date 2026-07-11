@@ -13,17 +13,17 @@ name = "gemini"
 [[projects]]
 name = "jarvis"
 
-[projects.agent]
-type = "antigravity"
-provider_refs = ["gemini"]
-
-[projects.agent.options]
-work_dir = "/root/agent"
-data_dir = "/root/agent/data"
-mode = "yolo"
-model = "Claude Sonnet 4.6 (Thinking)"
-
-cmd = "agy"
+#[projects.agent]
+#type = "antigravity"
+#provider_refs = ["gemini"]
+#
+#[projects.agent.options]
+#work_dir = "/root/agent"
+#data_dir = "/root/agent/data"
+#mode = "yolo"
+#model = "Claude Sonnet 4.6 (Thinking)"
+#
+#cmd = "agy"
 # timeout_mins = 30
 
 [projects.agent]
