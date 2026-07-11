@@ -26,9 +26,45 @@ model = "Claude Sonnet 4.6 (Thinking)"
 cmd = "agy"
 # timeout_mins = 30
 
+[projects.agent]
+type = "codex"
+[projects.agent.options]
+work_dir = "/root/agent"
+mode = "suggest"  # "suggest" | "auto-edit" | "full-auto" | "yolo"
+# Mode options / 模式说明:
+# - "suggest":   ask permission for every tool call (default, safest) / 每次调用都需确认（默认，最安全）
+# - "auto-edit": auto-approve file edits, ask for shell commands / 文件编辑自动通过，Shell 命令仍需确认
+# - "full-auto": auto-approve everything with workspace sandbox / 全部自动通过，工作区沙箱保护
+# - "yolo":      bypass all approvals and sandbox (dangerous) / 跳过所有审批和沙箱（危险）
+#
+# Optional: specify a model / 可选：指定模型
+# model = "o3"
+#
+# Optional: specify Codex reasoning effort / 可选：指定 Codex 推理强度
+# reasoning_effort = "low"  # "minimal" | "low" | "medium" | "high" | "xhigh"
+#
+# Optional: project system prompt / 可选：项目系统提示
+# Codex has no native system-prompt flag, so cc-connect injects this as a
+# preamble prepended to your first message of each new session (resumed
+# sessions are not re-injected).
+# Codex 没有原生的系统提示参数，cc-connect 会将其作为前导内容注入到每个新
+# 会话的第一条消息之前（恢复的会话不会重复注入）。
+# system_prompt = "You are a helpful AI assistant that specializes in Python development."
+#
+# Optional: additional project instructions / 可选：追加的项目指令
+# Appended after system_prompt in the same injected preamble. Can be used
+# alone or combined with system_prompt.
+# 追加在 system_prompt 之后，包含在同一段注入的前导内容中。可单独使用，也可与
+# system_prompt 同时使用。
+append_system_prompt = ""
+# Active provider / 当前激活的 provider
+provider = "openai"
+[[projects.agent.providers]]
+name = "openai"
+#api_key = "sk-xxx"
+
 # Platforms bound to the project
 # ==== Slack ====
-
 #[[projects.platforms]]
 #type = "slack"
 
@@ -52,7 +88,6 @@ cmd = "agy"
 # port = "8080"
 # callback_path = "/message"
 # allow_from = "*"
-
 
 # Discord (uncomment to enable / 取消注释以启用)
 [[projects.platforms]]
@@ -78,3 +113,5 @@ respond_to_at_everyone_and_here = false  # If true, treat @everyone/@here as a d
 #proxy = "http://127.0.0.1:7890"  # Optional HTTP/SOCKS5 proxy for Discord API & Gateway / 可选代理
 #proxy_username = ""              # Optional proxy auth username / 代理用户名
 #proxy_password = ""              # Optional proxy auth password / 代理密码
+
+

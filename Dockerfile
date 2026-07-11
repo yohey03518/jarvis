@@ -36,7 +36,7 @@ RUN curl -fsSL https://antigravity.google/cli/install.sh | bash
 ENV PATH="/root/.local/bin:${PATH}"
 
 # 4. CC Connect & 5. pnpm
-RUN npm install -g cc-connect pnpm
+RUN npm install -g cc-connect @openai/codex pnpm
 
 # Copy and set up the entrypoint script
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
