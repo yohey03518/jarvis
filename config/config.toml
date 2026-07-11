@@ -29,15 +29,15 @@ cmd = "agy"
 # Platforms bound to the project
 # ==== Slack ====
 
-[[projects.platforms]]
-type = "slack"
+#[[projects.platforms]]
+#type = "slack"
 
-[projects.platforms.options]
-bot_token = "${SLACK_BOT_TOKEN}" # "xoxb-your-bot-token"
-app_token = "${SLACK_APP_TOKEN}" # "xapp-your-app-level-token"
-allow_from = "*"  # Allowed Slack user IDs / 允许的 Slack 用户 ID
-share_session_in_channel = false  # If true, all users in a channel share one agent session / 频道共享会话
-session_scope = "thread"  # Session granularity: "user" (default, per channel+user) |
+#[projects.platforms.options]
+#bot_token = "${SLACK_BOT_TOKEN}" # "xoxb-your-bot-token"
+#app_token = "${SLACK_APP_TOKEN}" # "xapp-your-app-level-token"
+#allow_from = "*"  # Allowed Slack user IDs / 允许的 Slack 用户 ID
+#share_session_in_channel = false  # If true, all users in a channel share one agent session / 频道共享会话
+#session_scope = "thread"  # Session granularity: "user" (default, per channel+user) |
                         # "channel" (one session per channel, same as share_session_in_channel) |
                         # "thread" (one session per Slack thread — a new top-level message starts
                         #  a fresh session, replies in the same thread continue it).
@@ -52,3 +52,29 @@ session_scope = "thread"  # Session granularity: "user" (default, per channel+us
 # port = "8080"
 # callback_path = "/message"
 # allow_from = "*"
+
+
+# Discord (uncomment to enable / 取消注释以启用)
+[[projects.platforms]]
+type = "discord"
+[projects.platforms.options]
+token = "${DISCORD_TOKEN}"
+allow_from = "*"  # Allowed Discord user IDs / 允许的 Discord 用户 ID
+guild_id = ""     # Optional: set for instant slash command registration (per-guild)
+                  # 可选：设置后 slash 命令秒级生效（仅该服务器）
+group_reply_all = false  # If true, respond to ALL guild messages without @mention / 设为 true 群聊无需 @ 也响应
+group_reply_all_guilds = ""  # Comma-separated guild IDs where group_reply_all is active (overrides group_reply_all)
+                             # e.g. "123456789012345678,987654321098765432"; takes precedence over group_reply_all
+                             # 逗号分隔的服务器 ID，仅在这些服务器无需 @ 也响应（优先于 group_reply_all）
+share_session_in_channel = false  # If true, all users in a channel share one agent session / 频道共享会话
+thread_isolation = true  # If true, cc-connect creates/uses Discord threads as session boundaries when the channel supports threads
+                          # 设为 true 时，cc-connect 会在支持 thread 的 Discord 频道内按 thread 隔离会话
+progress_style = "legacy"  # Progress rendering: legacy | compact | card / 进度展示方式：legacy | compact | card
+                           # card = one editable Discord embed progress card / card = 单条可编辑的 Discord 嵌入式进度卡
+reply_hud = false  # If true, append final-reply HUD line (model/context/tokens) in Discord only
+                   # 设为 true 时，仅在 Discord 最终回复末尾附加 HUD（模型/上下文/tokens）
+respond_to_at_everyone_and_here = false  # If true, treat @everyone/@here as a direct mention so the bot responds
+                             # 设为 true 时，将 @everyone/@here 视为直接 @ 机器人，使机器人响应
+#proxy = "http://127.0.0.1:7890"  # Optional HTTP/SOCKS5 proxy for Discord API & Gateway / 可选代理
+#proxy_username = ""              # Optional proxy auth username / 代理用户名
+#proxy_password = ""              # Optional proxy auth password / 代理密码
