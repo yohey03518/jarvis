@@ -1,7 +1,7 @@
 alias d=docker
 alias dc="docker compose"
 alias dcr="docker compose restart"
-alias dcub="docker compose up -d --build"
+alias dcub="docker compose -f \"$HOME/jarvis/docker-compose.yml\" build --no-cache && docker compose -f \"$HOME/jarvis/docker-compose.yml\" up -d --force-recreate"
 alias dcd="docker compose down"
 alias dex="docker compose -f \"$HOME/jarvis/docker-compose.yml\" exec agent sh"
 alias dlog="docker compose -f \"$HOME/jarvis/docker-compose.yml\" logs agent"
