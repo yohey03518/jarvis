@@ -26,10 +26,15 @@ services:
       - .env
     environment:
       - NGINX_ENVSUBST_FILTER=^(DOMAIN_NAME|CERT_DOMAIN)$$
+      - BASIC_AUTH_USER=${BASIC_AUTH_USER}
+      - BASIC_AUTH_PASSWORD=${BASIC_AUTH_PASSWORD}
       - TZ=${TZ}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - agent
     restart: unless-stopped
+
 
