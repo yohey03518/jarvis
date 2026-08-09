@@ -1,5 +1,17 @@
+# Stage 1: Build cc-connect from source code
+FROM golang:latest AS cc-connect-builder
+ENV GOTOOLCHAIN=auto
+WORKDIR /src
+RUN git clone https://github.com/chenhg5/cc-connect.git . \
+    && mkdir -p web/dist && touch web/dist/.gitkeep \
+    && CGO_ENABLED=0 go build -ldflags="-s -w" -o /usr/local/bin/cc-connect ./cmd/cc-connect
+
+# Stage 2: Runtime image
 FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
+
+# Copy compiled cc-connect binary from builder
+COPY --from=cc-connect-builder /usr/local/bin/cc-connect /usr/local/bin/cc-connect
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -35,8 +47,8 @@ RUN curl -fsSL https://antigravity.google/cli/install.sh | bash
 # Ensure binaries are in PATH
 ENV PATH="/root/.local/bin:${PATH}"
 
-# 4. CC Connect & 5. pnpm
-RUN npm install -g cc-connect @openai/codex pnpm
+# 4. Codex CLI & 5. pnpm (cc-connect is built from source above)
+RUN npm install -g @openai/codex pnpm
 
 # Copy and set up the entrypoint script
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
