@@ -3,7 +3,7 @@
 This repository contains the configuration and scripts to set up a personal AI agent bridge between LINE/Slack and various AI CLIs (Claude Code, Antigravity CLI, and Codex).
 
 ## Features
-- **cc-connect**: A bridge for local AI agents, compiled from source (`https://github.com/chenhg5/cc-connect`).
+- **cc-connect**: A bridge for local AI agents (installed via npm using `@beta` pre-release).
 - **Nginx Reverse Proxy**: A secure frontend reverse proxy handling HTTP Basic Authentication, blocking all web crawlers (`robots.txt`), rate-limiting (5 requests/sec per IP), blocking scanner bots, and dropping raw IP scanning attempts.
 - **AI CLIs**: Pre-installed Claude Code, Antigravity CLI, and Codex.
 
